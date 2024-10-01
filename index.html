@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GREEN-API Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 16px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>GREEN-API Client</h2>
+    
+    <label for="idInstance">ID Инстанса:</label>
+    <input type="text" id="idInstance" placeholder="Введите ID Инстанса">
+
+    <label for="apiToken">API Token:</label>
+    <input type="text" id="apiToken" placeholder="Введите API Token">
+    
+    <button onclick="getSettings()">Получить Настройки</button>
+    <button onclick="getStateInstance()">Получить Состояние Инстанса</button>
+    <button onclick="sendMessage()">Отправить Сообщение</button>
+    
+    <label for="response">Ответ:</label>
+    <textarea id="response" readonly></textarea>
+</div>
+
+<script>
+    async function callAPI(method, data) {
+        const idInstance = document.getElementById('idInstance').value;
+        const apiToken = document.getElementById('apiToken').value;
+        const responseArea = document.getElementById('response');
+
+        const url = `https://api.green-api.com/waInstance${idInstance}/${method}/${apiToken}`;
+        
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            responseArea.value = JSON.stringify(result, null, 2);
+        } catch (error) {
+            responseArea.value = `Ошибка: ${error.message}`;
+        }
+    }
+
+    function getSettings() {
+        callAPI('getSettings', {});
+    }
+
+    function getStateInstance() {
+        callAPI('getStateInstance', {});
+    }
+
+    function sendMessage() {
+        const messageData = {
+            "chatId": "<ваш чат ID>",
+            "message": "<Ваше сообщение>"
+        };
+        callAPI('sendMessage', messageData);
+    }
+</script>
+
+</body>
+</html>
