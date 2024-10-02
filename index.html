@@ -1,20 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GREEN-API Client</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 16px;
-        }
-        .container {
-            max-width: 500px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
         }
         input[type="text"] {
             width: 100%;
@@ -38,12 +29,10 @@
 
 <div class="container">
     <h2>GREEN-API Client</h2>
-    
     <label for="idInstance">ID Инстанса:</label>
-    <input type="text" id="idInstance" placeholder="Введите ID Инстанса">
-
+    <input type="text" id="idInstance" placeholder="ID-instanx">
     <label for="apiToken">API Token:</label>
-    <input type="text" id="apiToken" placeholder="Введите API Token">
+    <input type="text" id="apiToken" placeholder="API-token">
     
     <button onclick="getSettings()">Получить Настройки</button>
     <button onclick="getStateInstance()">Получить Состояние Инстанса</button>
@@ -79,11 +68,9 @@
     function getSettings() {
         callAPI('getSettings', {});
     }
-
     function getStateInstance() {
         callAPI('getStateInstance', {});
     }
-
     function sendMessage() {
         const messageData = {
             "chatId": "<ваш чат ID>",
